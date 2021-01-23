@@ -1,1 +1,5 @@
+com\vauricch\grocery\repository\ItemRepository.class
+com\vauricch\grocery\model\Item.class
+com\vauricch\grocery\service\ItemService.class
+com\vauricch\grocery\api\ItemRestController.class
 com\vauricch\grocery\Application.class
