@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemService {
@@ -23,11 +24,15 @@ public class ItemService {
         return itemRepository.insert(item);
     }
 
-    public Item getItem(String id) {
-        return itemRepository.findById(id).get();
+    public Optional<Item> getItem(String id) {
+        return itemRepository.findById(id);
     }
 
     public List<Item> getAllItems() {
         return itemRepository.findAll();
+    }
+
+    public Item updateItem(Item item) {
+        return itemRepository.save(item);
     }
 }
