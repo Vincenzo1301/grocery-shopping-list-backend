@@ -3,7 +3,7 @@
 This repository contains the code of the Grocery Shopping List backend.
 
 ## Motivation
-This Spring Boot Application was created as part of a HOBBY project, named Grocery Shopping List. The aim of the project is to make a shopping list 
+This Spring Boot Application was created as part of a HOBBY project, named Grocery Shopping List. The aim of the project is to make a grocery shopping list 
 based on the contents of your refrigerator in a simple and quick way. The backend is responsible for storing the data about the food and its availability and to 
 make them available via REST interface. This interface is then used by the frontend application.
 
