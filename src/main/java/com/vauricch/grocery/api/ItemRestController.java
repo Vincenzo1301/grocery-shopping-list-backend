@@ -10,7 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/items")
@@ -19,21 +19,29 @@ public class ItemRestController {
     @Autowired
     private ItemService itemService;
 
-    @PostMapping(path = "/add")
-    public ResponseEntity<?> postItem(@RequestBody Item item, @RequestParam MultipartFile multipartFile) throws IOException {
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    public ResponseEntity<?> postItem( @RequestParam String name, @RequestParam boolean out, @RequestParam MultipartFile multipartFile) throws IOException {
+        Item item = new Item();
+        item.setName(name);
+        item.setOut(out);
+
         itemService.addItem(item, multipartFile);
 
         final URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping(path = "/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<?> getItem(@PathVariable String id) {
-        Optional<Item> optionalItem = itemService.getItem(id);
-        if(!optionalItem.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        Item item = optionalItem.get();
+        Item item = itemService.getItem(id);
+
         return ResponseEntity.ok(item);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getAllItems() {
+        final List<Item> items = itemService.getAllItems();
+
+        return ResponseEntity.ok(items);
     }
 }

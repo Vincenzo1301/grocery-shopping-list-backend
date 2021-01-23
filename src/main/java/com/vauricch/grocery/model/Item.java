@@ -1,6 +1,5 @@
 package com.vauricch.grocery.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
@@ -27,7 +26,6 @@ public class Item {
     /**
      * Each item is visualized by an image
      */
-    @JsonIgnore
     private Binary imageFile;
 
 }
