@@ -52,6 +52,13 @@ public class ItemRestController {
         return ResponseEntity.ok(items);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/out")
+    public ResponseEntity<?> getAllItemsThatAreOut() {
+        final List<Item> items = itemService.getAllItemsThatAreOut();
+
+        return ResponseEntity.ok(items);
+    }
+
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public ResponseEntity<?> putItem(@PathVariable String id,
                                      @RequestParam String name,

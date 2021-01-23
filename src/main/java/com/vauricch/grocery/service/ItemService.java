@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
@@ -30,6 +31,12 @@ public class ItemService {
 
     public List<Item> getAllItems() {
         return itemRepository.findAll();
+    }
+
+    public List<Item> getAllItemsThatAreOut() {
+        List<Item> items = itemRepository.findAll();
+
+        return items.stream().filter(Item::isOut).collect(Collectors.toList());
     }
 
     public Item updateItem(Item item) {
