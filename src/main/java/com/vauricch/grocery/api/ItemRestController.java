@@ -59,26 +59,34 @@ public class ItemRestController {
         return ResponseEntity.ok(items);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    @RequestMapping(method = RequestMethod.PATCH, value = "/{id}")
     public ResponseEntity<?> putItem(@PathVariable String id,
-                                     @RequestParam String name,
-                                     @RequestParam boolean out,
-                                     @RequestParam MultipartFile multipartFile) throws IOException {
-        Item item = new Item();
+                                     @RequestParam(required = false) String name,
+                                     @RequestParam(required = false) Boolean out,
+                                     @RequestParam(required = false) MultipartFile multipartFile) throws IOException {
 
-        item.setName(name);
-        item.setOut(out);
-        item.setImageFile(
-                new Binary(BsonBinarySubType.BINARY, multipartFile.getBytes()));
+        final Optional<Item> optionalOldItem = itemService.getItem(id);
 
-        final Optional<Item> oldItem = itemService.getItem(id);
-
-        if (!oldItem.isPresent()) {
+        if (!optionalOldItem.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
-        final Item newItem = itemService.updateItem(item);
+        Item oldItem = optionalOldItem.get();
 
-        return ResponseEntity.ok(newItem);
+        if (name != null) {
+            oldItem.setName(name);
+        }
+
+        if (out != null) {
+            oldItem.setOut(out);
+        }
+
+        if (multipartFile != null) {
+            oldItem.setImageFile(new Binary(BsonBinarySubType.BINARY, multipartFile.getBytes()));
+        }
+
+        itemService.updateItem(oldItem);
+
+        return ResponseEntity.ok(optionalOldItem.get());
     }
 }
