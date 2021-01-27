@@ -96,7 +96,7 @@ public class ItemRestController {
         return ResponseEntity.ok(optionalOldItem.get());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/download-pfd")
+    @RequestMapping(method = RequestMethod.GET, value = "/download-pdf")
     public ResponseEntity<?> getPdf() {
         final ArrayList<Item> items = new ArrayList<>(itemService.getAllItemsThatAreOut());
 
